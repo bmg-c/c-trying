@@ -3,17 +3,14 @@
 #include<float.h>
 
 int main(void) {
-   int num;
-   char ch;
+   int nums[] = {1, 3, 2, 6, 1000, 2, 1};
 
-   printf("Say a number: ");
-   scanf("%d", &num);
+   int largest = 0;
+   for (size_t i = 0; i < 7; i++) {
+      largest = largest > nums[i] ? largest : nums[i];
+   }
 
-   printf("Say a character: ");
-   scanf(" %c", &ch);
+   printf("%d\n", largest);
 
-   printf("\nYou entered num: %d\n", num);
-   printf("You entered ch: %c\n", ch);
-
-   return 0; // Показыает, что сработала правильно
+   return 0;
 }
