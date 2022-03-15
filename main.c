@@ -60,5 +60,17 @@ int main() {
    //
    // printf("%d\n", largest);
 
+
+   // int pussy = -14;
+   // int *pussy_pointer = &pussy;
+   // /* Or:
+   // int *pussy_pointer, pussy = -14;
+   // pusys_pointer = &pussy;
+   // */
+   //
+   // printf("Address of pussy_pointer - %u\n", pussy_pointer); // The same
+   // printf("Address of pussy - %u\n", &pussy); // The same
+   // printf("Value of pussy/pussy_pointer - %d\n", *pussy_pointer);
+
    return 0;
 }
