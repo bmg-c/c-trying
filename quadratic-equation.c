@@ -19,7 +19,7 @@ int quad(char *str) {
          sscanf(numStr, "%04d", &num);
          if (str[i+1] == '^') {
             i += 2;
-            state += 1
+            state += 1;
          }
 
          memset(numStr,0,sizeof(numStr));

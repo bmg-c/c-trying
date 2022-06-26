@@ -23,7 +23,7 @@ int main() {
 
    // double a = 0.0005;
    // printf("%f\n", a); // Выводит число в обычном виде (по умолчанию до 6 цифр после точки)
-   // printf("%g\n", 0.0005); // Выводит число то 4-х цифр после точки. Если же число цифр после точки выше - выводит как пример ниже
+   // printf("%g\n", 0.0005); // Выводит число до 4-х цифр после точки. Если же число цифр после точки выше - выводит как пример ниже
    // printf("%g\n", 0.00005); // Выводит число в нормализированном виде, т.е в виде 5e-5, что значит 5*10^-5
    // printf("%e\n", 0.0005); // Выводит число исключительно в нормализированном виде, т.е здесь будет 5.000000e-04
    //
@@ -65,12 +65,43 @@ int main() {
    // int *pussy_pointer = &pussy;
    // /* Or:
    // int *pussy_pointer, pussy = -14;
-   // pusys_pointer = &pussy;
+   // pussy_pointer = &pussy;
    // */
    //
    // printf("Address of pussy_pointer - %u\n", pussy_pointer); // The same
    // printf("Address of pussy - %u\n", &pussy); // The same
    // printf("Value of pussy/pussy_pointer - %d\n", *pussy_pointer);
+
+
+   // printf("Path: C:\\Vowels\\a\n22");
+
+
+   // int a, b, c;
+   // printf("Введите 3 числа\n");
+   // scanf("%d,%d,%d", &a, &b, &c);
+   // printf("%d,%d,%d\n", a, b, c);
+
+
+   // char ch;
+   //
+   // printf("Enter a character: ");
+   // ch = getchar();
+   //
+   // printf("Entered character is: %c\n", ch);
+   // // Или
+   // putchar(ch);
+
+
+   int n;
+   char ch;
+
+   printf("Введите число: ");
+   scanf("%d", &n);
+
+   printf("Введите символ: ");
+   scanf("\n%c", &ch);
+
+   printf("%d, %c\n", n, ch);
 
    return 0;
 }
