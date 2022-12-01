@@ -15,6 +15,7 @@ typedef enum arrowKey_e
     ENTER,
 } arrowKey_t;
 
+
 // Read a keyboard key press and return the character pressed, or a negative
 // number in the event of an error.
 // NB: for help reading output from system calls, see here:
