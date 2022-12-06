@@ -12,6 +12,10 @@
 
 
 int main() {
+    #ifdef _WIN32 // Если Windows, то поменять кодировку страницы
+	    system("chcp 65001");
+	#endif
+
     int n, i;
     printf("Введите размерность массива: ");
     while (1) {
