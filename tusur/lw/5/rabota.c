@@ -29,6 +29,7 @@ int main() {
     }
 
     int *arr;
+    // сака
     arr = (int *) malloc(sizeof(int) * n);
 
     while (1) {
