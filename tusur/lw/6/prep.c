@@ -2,10 +2,10 @@
 #include "stdlib.h"
 #include "time.h"
 
-void sortArr(int n, int *arr, int *order);
-void sortCol(int n, int **arr, int *order);
+void sortArr (int n, int *arr, int *order);
+void sortCol (int n, int **arr, int *order);
 
-int main() {
+int main () {
     #ifdef _WIN32 // Если Windows, то поменять кодировку страницы
 	    system("chcp 65001");
 	#endif
@@ -15,12 +15,12 @@ int main() {
     // // Инициализируем переменные, а также запрашиваем ввод n
     int n; // Размерность массива
     int i, j, k;
-    printf("Введите размерность массива: ");
+    printf ("Введите размерность массива: ");
     while (1) {
-        scanf("%d", &n);
+        scanf ("%d", &n);
         if (getchar() != '\n') { // Если в конце не символ новой линии,
                                  // то очистить и начать цикл снова.
-            printf("Данные некорректны.\nВведите их снова: ");
+            printf ("Данные некорректны.\nВведите их снова: ");
             while (getchar() != '\n');
             continue;
         }
@@ -32,9 +32,9 @@ int main() {
     }
 
     // Определяем главную матрицу
-    int **arr = (int **) malloc(sizeof(int*) * n); // Выделяем память под строки
+    int **arr = (int **) malloc (sizeof (int *) * n); // Выделяем память под строки
     for (i = 0; i < n; i++) // Выделяем память под элементы строк
-        arr[i] = (int*) malloc(sizeof(int) * n);
+        arr[i] = (int *) malloc (sizeof (int) * n);
 
     // Генерируем целые числа в элементы матрицы
     for (i = 0; i < n; i++) {
@@ -45,7 +45,7 @@ int main() {
 
 
     // Определяем и инициализируем нулями массив сумм элементов столбов
-    int *sum = (int *) malloc(sizeof(int) * n);
+    int *sum = (int *) malloc (sizeof (int) * n);
     for (i = 0; i < n; i++)
         sum[i] = 0;
 
@@ -64,15 +64,15 @@ int main() {
         }
         // flag стал 1 => был повторяющийся элемент
         if (flag) {
-            printf("\n");
+            printf ("\n");
             flag = 0; // Меняем для проверки следующей строки
-        } else printf(" <--\n");
+        } else printf (" <--\n");
     }
 
     // Вывод сумм столбцов под столбцами
-    printf("\n");
+    printf ("\n");
     for (i = 0; i < n; i++)
-        printf("%5d", sum[i]);
+        printf ("%5d", sum[i]);
 
 
 
@@ -81,23 +81,23 @@ int main() {
     // // Сортировка сумм элементов столбца и вывод нового порядка в массив
 
     // Определяем и инициализируем массив нового порядка столбцов
-    int *order = (int *) malloc(sizeof(int) * n);
+    int *order = (int *) malloc (sizeof (int) * n);
     for (i = 0; i < n; i++)
         order[i] = i;
 
-    printf("\n\nХод сортировки столбцов:\n");
+    printf ("\n\nХод сортировки столбцов:\n");
 
     // Вывод на экран старого положения столбцов
     for (i = 0; i < n; i++)
-        printf("%3d ", order[i]);
+        printf ("%3d ", order[i]);
 
     // Сама сортировка
-    sortArr(n, sum, order);
+    sortArr (n, sum, order);
 
     // Вывод на экран новго положения столбцов
-    printf("\n");
+    printf ("\n");
     for (i = 0; i < n; i++)
-        printf("%3d ", order[i]);
+        printf ("%3d ", order[i]);
 
 
 
@@ -105,11 +105,11 @@ int main() {
     // // Сортировка столбцов используя новый порядок и вывод на экран
 
     // Сотрируем матрицу по столбцам и освобождаем массив нового порядка
-    sortCol(n, arr, order);
-    free(order);
+    sortCol (n, arr, order);
+    free (order);
 
     // Выводим матрицу
-    printf("\n\n\nСортированная матрица:\n");
+    printf ("\n\n\nСортированная матрица:\n");
     for (i = 0; i < n; i++) {
         for (j = 0; j < n; j++) {
             printf("%4d ", arr[i][j]);
@@ -118,20 +118,20 @@ int main() {
     }
 
     // Выводим суммы под столбцами и освобождаем массив сумм столбцов
-    printf("\n");
+    printf ("\n");
     for (i = 0; i < n; i++)
-        printf("%5d", sum[i]);
-    free(sum);
+        printf ("%5d", sum[i]);
+    free (sum);
 
 
-    printf("\n\nПрограмму написал Лифанов Иван Сергеевич 422-3\n");
+    printf ("\n\nПрограмму написал Лифанов Иван Сергеевич 422-3\n");
 
     return 0;
 }
 
 
 
-void sortArr(int n, int *arr, int *order) {
+void sortArr (int n, int *arr, int *order) {
    int i, j;
    int temp; // Временная переменная, используемая при обмене значений
    /*
@@ -160,11 +160,11 @@ void sortArr(int n, int *arr, int *order) {
 }
 
 
-void sortCol(int n, int **arr, int *order) {
+void sortCol (int n, int **arr, int *order) {
     int temp; // Временная переменная, используемая при обмене значений
     int i, j, k;
     // Массив для слежки над тем, как меняются местами столбцы
-    int *orderArr = (int *) malloc(sizeof(int) * n);
+    int *orderArr = (int *) malloc (sizeof (int) * n);
     for (i = 0; i < n; i++)
         orderArr[i] = i;
 
@@ -187,12 +187,12 @@ void sortCol(int n, int **arr, int *order) {
 
 
                     /* Вывод прогресса сортировки, можно откомментировать*/
-                    printf("\n\n");
+                    printf ("\n\n");
                     for (i = 0; i < n; i++)
-                        printf("%3d ", orderArr[i]);
-                    printf("\n");
+                        printf ("%3d ", orderArr[i]);
+                    printf ("\n");
                     for (i = 0; i < n; i++)
-                        printf("%3d ", order[i]);
+                        printf ("%3d ", order[i]);
 
                     break;
                 }
