@@ -11,6 +11,9 @@ int M2 (float* arr, int n);
 float A2 (float* arr, int n); 
 
 int main () {
+    #ifdef _WIN32 // Если Windows, то поменять кодировку страницы
+	    system("chcp 65001");
+	#endif
     srand (time (NULL)); // Рандомизируем время
 
 
