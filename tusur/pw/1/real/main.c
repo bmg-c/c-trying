@@ -79,9 +79,9 @@ static void print_file(char* file_name, int* dimensions) {
 }
 
 static int run() {
-    int n, m;
+    int n = 5, m = 5;
     printf("Enter matrix dismentions: (n, m): "); // Количество столбцов x строк
-    scanf("%d, %d", &n, &m);
+    // scanf("%d, %d", &n, &m);
 
     int* dimensions = malloc(2 * sizeof(int));
     dimensions[0] = n;
