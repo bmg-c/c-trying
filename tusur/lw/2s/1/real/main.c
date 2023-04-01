@@ -92,6 +92,7 @@ PNode read_file_nodes(char *file_name) {
         add_last(&Head, NewNode);
     }
 
+    free(nums_arr);
     return Head;
 }
 
