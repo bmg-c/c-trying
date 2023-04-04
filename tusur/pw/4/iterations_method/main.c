@@ -29,6 +29,7 @@ void main1() {
     double x = 1.57; // pi / 2
     double x_last = g1_x1(x);
     printf("Первое приближение: %lf\n", x);
+    // Проверка на сходимость
     if (g1_x1_derivative(x) >= 1) {
         printf("Не сходится.........\n");
         return;
@@ -47,6 +48,7 @@ void main1() {
     x = 1;
     x_last = g1_x2(x);
     printf("Первое приближение: %lf\n", x);
+    // Проверка на сходимость
     if (g1_x2_derivative(x) >= 1) {
         printf("Не сходится.........\n");
         return;
@@ -80,6 +82,7 @@ void main2() {
     double x = 1.57; // pi / 2
     double x_last = g2_x1(x);
     printf("Первое приближение: %lf\n", x);
+    // Проверка на сходимость
     if (g2_x1_derivative(x) >= 1) {
         printf("Не сходится.........\n");
         return;
@@ -120,6 +123,7 @@ void main3() {
     double x = 1.57; // прикол))
     double x_last = g3_x1(x);
     printf("Первое приближение: %lf\n", x);
+    // Проверка на сходимость
     if (g3_x1_derivative(x) >= 1) {
         printf("Не сходится.........\n");
         return;
@@ -138,6 +142,7 @@ void main3() {
     x = -1.57; // прикол))
     x_last = g3_x2(x);
     printf("Первое приближение: %lf\n", x);
+    // Проверка на сходимость
     if (g3_x2_derivative(x) >= 1) {
         printf("Не сходится.........\n");
         return;
