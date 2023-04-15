@@ -2,162 +2,67 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Первое уравнение
-// Выходная первая функция и ее производная для x1 (которая между 2 и 2.1)
-double g1_x1(double x) { return sqrt(5 * sin(x)); }
-double g1_x1_derivative(double x) {
-    return fabs((5 * cos(x)) / (2 * sqrt(5 * sin(x))));
+// Первые функции
+double g_x1(double x, int equation) {
+    switch (equation) {
+    case 1:
+        return sqrt(5 * sin(x));
+    case 2:
+        return sin(x) + 0.15;
+    case 3:
+        return sqrt(sqrt(9 + x) - x + 4);
+    default:
+        printf("\nОшибка\n");
+        return 0;
+    }
 }
-// Выходная вторая функция и ее производная для x2 (которая по сути 0)
-double g1_x2(double x) { return asin((x * x) / 5); }
-double g1_x2_derivative(double x) {
-    return fabs((2 * x) / sqrt(25 - pow(x, 4)));
-}
-
-void main1() {
-    printf("Первое уравнение.\n\n");
-
-    double e = 0;
-    printf("Введите точность e: ");
-    scanf("%lf", &e);
-    while (getchar() != '\n')
-        ;
-    printf("\n");
-
-    // Первый x (который между 2 и 2.1)
-    printf("Вычисление x1:\n");
-    double x = 1.57; // pi / 2
-    double x_last = g1_x1(x);
-    printf("Первое приближение: %lf\n", x);
-    // Проверка на сходимость
-    if (g1_x1_derivative(x) >= 1) {
-        printf("Не сходится.........\n");
-        return;
+double g_x1_derivative(double x, int equation) {
+    switch (equation) {
+    case 1:
+        return fabs((5 * cos(x)) / (2 * sqrt(5 * sin(x))));
+    case 2:
+        return fabs(cos(x));
+    case 3:
+        return fabs((1 / (2 * sqrt(9 + x)) - 1) /
+                    (2 * sqrt(sqrt(9 + x) - x + 4)));
+    default:
+        printf("\nОшибка\n");
+        return 0;
     }
-
-    while (fabs(x - x_last) >= e) {
-        x_last = x;
-        x = g1_x1(x_last);
-        printf("x[n], x[n + 1] = %lf, %lf\n", x_last, x);
-    }
-
-    printf("x1: %lf\n", x);
-
-    // Второй x (который 0)
-    printf("Вычисление x2:\n");
-    x = 1;
-    x_last = g1_x2(x);
-    printf("Первое приближение: %lf\n", x);
-    // Проверка на сходимость
-    if (g1_x2_derivative(x) >= 1) {
-        printf("Не сходится.........\n");
-        return;
-    }
-
-    while (fabs(x - x_last) >= e) {
-        x_last = x;
-        x = g1_x2(x_last);
-        printf("x[n], x[n + 1] = %lf, %lf\n", x_last, x);
-    }
-
-    printf("x2: %lf\n", x);
 }
 
-// Второе уравнение
-// Выходная функция и ее производная для x1
-double g2_x1(double x) { return sin(x) + 0.15; }
-double g2_x1_derivative(double x) { return fabs(cos(x)); }
-
-void main2() {
-    printf("Второе уравнение.\n\n");
-
-    double e = 0;
-    printf("Введите точность e: ");
-    scanf("%lf", &e);
-    while (getchar() != '\n')
-        ;
-    printf("\n");
-
-    printf("Вычисление x1:\n");
-    double x = 1.57; // pi / 2
-    double x_last = g2_x1(x);
-    printf("Первое приближение: %lf\n", x);
-    // Проверка на сходимость
-    if (g2_x1_derivative(x) >= 1) {
-        printf("Не сходится.........\n");
-        return;
+// Вторые функции
+double g_x2(double x, int equation) {
+    switch (equation) {
+    case 1:
+        return asin((x * x) / 5);
+    case 2:
+        return sin(x) + 0.15;
+    case 3:
+        return -sqrt(sqrt(9 + x) - x + 4);
+    default:
+        printf("\nОшибка\n");
+        return 0;
     }
-
-    while (fabs(x - x_last) >= e) {
-        x_last = x;
-        x = g2_x1(x_last);
-        printf("x[n], x[n + 1] = %lf, %lf\n", x_last, x);
+}
+double g_x2_derivative(double x, int equation) {
+    switch (equation) {
+    case 1:
+        return fabs((2 * x) / sqrt(25 - pow(x, 4)));
+    case 2:
+        return fabs(cos(x));
+    case 3:
+        return fabs((1 / (2 * sqrt(9 + x)) - 1) /
+                    (2 * sqrt(sqrt(9 + x) - x + 4)));
+    default:
+        printf("\nОшибка\n");
+        return 0;
     }
-
-    printf("x1: %lf\n", x);
 }
 
-// Третье уравнение
-// Выходная первая функция и ее производная для x1 (которая между 2 и 2.5)
-double g3_x1(double x) { return sqrt(sqrt(9 + x) - x + 4); }
-double g3_x1_derivative(double x) {
-    return fabs((1 / (2 * sqrt(9 + x)) - 1) / (2 * sqrt(sqrt(9 + x) - x + 4)));
-}
-// Выходная вторая функция и ее производная для x2 (которая между -3.5 и -2.5)
-double g3_x2(double x) { return -sqrt(sqrt(9 + x) - x + 4); }
-double g3_x2_derivative(double x) {
-    return fabs((1 / (2 * sqrt(9 + x)) - 1) / (2 * sqrt(sqrt(9 + x) - x + 4)));
-}
+int main() {
+    system("chcp 65001");
 
-void main3() {
-    printf("Третье уравнение.\n\n");
-    double e = 0;
-    printf("Введите точность e: ");
-    scanf("%lf", &e);
-    while (getchar() != '\n')
-        ;
-    printf("\n");
-
-    // Первый x (положительный)
-    printf("Вычисление x1:\n");
-    double x = 1.57; // прикол))
-    double x_last = g3_x1(x);
-    printf("Первое приближение: %lf\n", x);
-    // Проверка на сходимость
-    if (g3_x1_derivative(x) >= 1) {
-        printf("Не сходится.........\n");
-        return;
-    }
-
-    while (fabs(x - x_last) >= e) {
-        x_last = x;
-        x = g3_x1(x_last);
-        printf("x[n], x[n + 1] = %lf, %lf\n", x_last, x);
-    }
-
-    printf("x1: %lf\n", x);
-
-    // Второй x (отрицательный)
-    printf("\nВычисление x2:\n");
-    x = -1.57; // прикол))
-    x_last = g3_x2(x);
-    printf("Первое приближение: %lf\n", x);
-    // Проверка на сходимость
-    if (g3_x2_derivative(x) >= 1) {
-        printf("Не сходится.........\n");
-        return;
-    }
-
-    while (fabs(x - x_last) >= e) {
-        x_last = x;
-        x = g3_x2(x_last);
-        printf("x[n], x[n + 1] = %lf, %lf\n", x_last, x);
-    }
-
-    printf("x2: %lf\n", x);
-}
-
-int run() {
     int equation = 0;
     printf("Уравнения:\n");
     printf("(1) x^2 - 5sin(x) = 0\n");
@@ -165,35 +70,52 @@ int run() {
     printf("(3) x - (9 + x)^(1/2) + x^2 - 4 = 0\n");
     printf("Напишите номер уравнения: ");
     scanf("%d", &equation);
-    while (getchar() != '\n')
-        ;
+    printf("\n");
 
-    printf("\n\n\n");
-    switch (equation) {
-    case 1:
-        main1();
-        break;
-    case 2:
-        main2();
-        break;
-    case 3:
-        main3();
-        break;
-    default:
-        printf("Ошибка! Введен неверный пример.\n");
-        break;
+    double e = 0;
+    printf("Введите точность e: ");
+    scanf("%lf", &e);
+    printf("\n");
+
+    // Первый x
+    printf("Вычисление x1:\n");
+    double x = 1.57;
+    double x_last = g_x1(x, equation);
+    printf("Первое приближение: %lf\n", x);
+    // Проверка на сходимость
+    if (g_x1_derivative(x, equation) >= 1) {
+        printf("Не сходится.........\n");
+        return 1;
     }
 
-    return EXIT_SUCCESS;
-}
+    while (fabs(x - x_last) >= e) {
+        x_last = x;
+        x = g_x1(x_last, equation);
+        printf("x[n], x[n + 1] = %lf, %lf\n", x_last, x);
+    }
 
-int main(int argc, char *argv[]) {
-#ifdef _WIN32
-    system("chcp 65001");
-#endif
+    printf("x1: %lf\n", x);
 
-    if (run() == EXIT_FAILURE)
-        return EXIT_FAILURE;
+    if (equation == 2)
+        return 0;
 
-    return EXIT_SUCCESS;
+    // Второй x
+    printf("Вычисление x2:\n");
+    x = 1.57;
+    x_last = g_x2(x, equation);
+    printf("Первое приближение: %lf\n", x);
+    // Проверка на сходимость
+    if (g_x2_derivative(x, equation) >= 1) {
+        printf("Не сходится.........\n");
+        return 0;
+    }
+
+    while (fabs(x - x_last) >= e) {
+        x_last = x;
+        x = g_x2(x_last, equation);
+        printf("x[n], x[n + 1] = %lf, %lf\n", x_last, x);
+    }
+
+    printf("x2: %lf\n", x);
+    return 0;
 }

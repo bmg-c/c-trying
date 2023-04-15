@@ -23,6 +23,7 @@ void main1() {
         double temp = x[1];
         x[1] = x[1] - (f1(x[1]) * (x[1] - x[0])) / (f1(x[1]) - f1(x[0]));
         x[0] = temp;
+        printf("1\n");
     }
 
     printf("%lf", x[1]);
