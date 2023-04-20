@@ -2,35 +2,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-double recursive(double x, int n, int i) {
+double factorial (double n)
+{   
+    if (n > 1)
+        return n * factorial(n - 1);
+
+    return 1;
+}
+
+double recursive(double x, int n, int i)
+{
+    double next = pow(x, i)/factorial(i);
+    printf("%lf\n", next);
+
     if (n == i)
-        return x;
-    return x - recursive(x * pow(x, 1.0 / i) / (i + 1), n, i + 1);
+        return next;
+    return next - recursive(x, n, i + 1);
 }
 
-double ln(double x, int n) {
-    int i = 1;
-    return recursive(x, n, i);
+double ln(double x, int n)
+{
+    return recursive(x + 1, n, 1);
 }
 
-int run() {
-    double x = 0;
-    int n = 0;
-    printf("Введите значение x и точность n (x n): ");
-    scanf("%lf %d", &x, &n);
-    printf("\n");
+int main ()
+{
+    double x = 0; int n = 0;
 
-    printf("ln(%lf + 1) с точностью до %d: %lf", x, n, ln(x, n));
-    return EXIT_SUCCESS;
-}
+    printf("Введите х и n-ый член: ");
+    scanf("%lf%d", &x, &n);
 
-int main(int argc, char *argv[]) {
-#ifdef _WIN32
-    system("chcp 65001");
-#endif
+    x = ln(x, n);
 
-    if (run() == EXIT_FAILURE)
-        return EXIT_FAILURE;
+    printf("Результат: %lf", x);
 
-    return EXIT_SUCCESS;
 }
