@@ -4,7 +4,6 @@
 
 #define MAX_FILENAME_LENGTH 256
 #define MAX_WORD_LENGTH 80
-#define COUNT 2
 
 typedef struct Node {
     char *word; // слово строки
@@ -38,15 +37,15 @@ void insert(PNode *Root, char *word, int pos) {
 }
 
 PNode read_file_nodes(char *file_name) {
-    FILE *file = fopen(file_name, "r");
-    if (file == NULL) {
-        printf("\nТакого файла не существует!\n");
-        exit(1);
-    }
-
     PNode Root = NULL;
-    int pos = 1, ch = fgetc(file), j;
 
+    FILE *file = fopen(file_name, "r");
+    if (file == NULL)
+        return Root;
+
+    int pos = 1, ch = fgetc(file), j;
+    if (ch == EOF)
+        return Root;
     while (1) {
         while (ch == ' ' || ch == '\n') {
             ch = fgetc(file);
@@ -76,43 +75,44 @@ PNode read_file_nodes(char *file_name) {
     fclose(file);
 }
 
-int search_word(PNode Root, char *word) {
+PNode search_node_by_word(PNode Root, char *word) {
     PNode TempNode = Root;
     while (TempNode) {
         if (strcmp(TempNode->word, word) == 0)
-            return TempNode->pos;
-        else if (word[0] < (TempNode->word)[0])
-            TempNode = TempNode->left;
-        else
+            return TempNode;
+        else if (word[0] >= (TempNode->word)[0])
             TempNode = TempNode->right;
+        else
+            TempNode = TempNode->left;
     }
 
-    return -1;
+    return NULL;
 }
 
 int run(int argc, char *argv[]) {
     char file_name[MAX_FILENAME_LENGTH];
     printf("Введите название файла: ");
-    scanf("%255s", file_name); // \0 в конце
-    while (getchar() != '\n')  // Очищаем буффер
+    scanf("%255s", file_name);
+    while (getchar() != '\n')
         ;
 
     PNode Root = read_file_nodes(file_name);
+    if (Root == NULL) {
+        printf("\n\nОшибка!\nФайл либо пустой, либо не существует.\n");
+        return EXIT_FAILURE;
+    }
 
     char word[MAX_WORD_LENGTH];
     printf("Введите слово для поиска: ");
-    scanf("%79s", word); // \0 в конце
-    while (getchar() != '\n')  // Очищаем буффер
+    scanf("%79s", word);
+    while (getchar() != '\n')
         ;
 
-    int pos = search_word(Root, word);
-    printf("Позиция слова: %d\n", pos);
-
-    PNode TempNode = Root;
-    while (TempNode) {
-        printf("%s\n", TempNode->word);
-        TempNode = TempNode->left;
-    }
+    PNode Node = search_node_by_word(Root, word);
+    if (Node == NULL)
+        printf("Слово не найдено\n");
+    else
+        printf("Позиция слова: %d\n", Node->pos);
 
     return EXIT_SUCCESS;
 }

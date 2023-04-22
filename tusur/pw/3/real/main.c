@@ -1,11 +1,20 @@
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 float recursive(int k) {
     if (k != 0)
-        return k * recursive(k - 1) + 1.0 / ((float)k);
+        return k * recursive(k - 1) + 1.0 / k;
+
     return 1;
+}
+
+float iterational(int k) {
+    float sum = 1;
+
+    for (int i = 1; i <= k; i++)
+        sum = i * sum + 1.0 / i;
+
+    return sum;
 }
 
 int run() {
@@ -14,7 +23,8 @@ int run() {
     scanf("%d", &k);
     printf("\n");
 
-    printf("Значение a(k): %f\n", recursive(k));
+    printf("Значение рекурсивной a(k): %f\n", recursive(k));
+    printf("Значение не рекурсивной a(k): %f\n", iterational(k));
 
     return EXIT_SUCCESS;
 }
