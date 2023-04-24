@@ -2,8 +2,17 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define True 1
-#define False 0
+#define MAX_FILENAME_LENGTH 256
+#define TESTS_AMOUNT 30
+#define MAX_ELEMENETS_AMOUNT 10000
+
+int *create_rand_arr(int elements_amount) {
+    int *arr = (int *)malloc(sizeof(int) * elements_amount);
+    for (int i = 0; i < elements_amount; i++)
+        arr[i] = rand() % 101;
+
+    return arr;
+}
 
 int merge(int *arr, int first, int mid, int last) {
     int comp_swap_amount = 0;
@@ -60,49 +69,31 @@ int sort(int *arr, int size) {
     return comp_swap_amount;
 }
 
-int is_arr_sorted(int *arr, int size) { // 1 - True
-    for (int i = 1; i < size; i++)
-        if (arr[i] < arr[i - 1])
-            return False;
-    return True;
+void run_tests(char *file_name) {
+    FILE *csv_file = fopen(file_name, "w");
+
+    for (int elements_amount = 100; elements_amount <= MAX_ELEMENETS_AMOUNT;
+         elements_amount += 100) {
+        int average_comparison_swap = 0;
+        for (int test = 1; test <= TESTS_AMOUNT; test++) {
+            int *arr = create_rand_arr(elements_amount);
+            average_comparison_swap +=
+                sort(arr, elements_amount) / TESTS_AMOUNT;
+            free(arr);
+        }
+        fprintf(csv_file, "%d; %d\n", elements_amount,
+                average_comparison_swap);
+    }
+
+    fclose(csv_file);
 }
-
-void print_arr(int *arr, int size) {
-    for (int i = 0; i < size; i++)
-        printf("%4d ", arr[i]);
-    printf("\n");
-}
-
-int *create_rand_arr(int size) {
-    int *arr = (int *)malloc(sizeof(int) * size);
-    for (int i = 0; i < size; i++)
-        arr[i] = rand() % 101;
-
-    return arr;
-}
-
 int run() {
-    int size = 0;
-    printf("Введите количество элементов в массиве: ");
-    scanf("%d", &size);
-    printf("\n");
+    char file_name[MAX_FILENAME_LENGTH];
+    printf("Введите полное название файла, куда будут записываться данные: ");
+    scanf("%255s", file_name); // \0 в конце
+    printf("\n%d\n", EXIT_SUCCESS);
 
-    int *arr = create_rand_arr(size);
-    print_arr(arr, size);
-    printf("\n");
-
-    int comp_swap_count = sort(arr, size);
-    printf("\n");
-    print_arr(arr, size);
-    printf("Количество сравнений и перестановок: %d", comp_swap_count);
-
-    printf("\n");
-    if (is_arr_sorted(arr, size) == True)
-        printf("Сортировка прошла успешно\n");
-    else
-        printf("Сортировка не удалась\n");
-
-    free(arr);
+    run_tests(file_name);
     return EXIT_SUCCESS;
 }
 

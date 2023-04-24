@@ -49,12 +49,12 @@ int merge(int *arr, int first, int mid, int last) {
 int sort(int *arr, int size) {
     int comp_swap_amount = 0;
 
-    for (int h = 1; h <= size; h *= 2)
-        for (int i = 0; i <= size - h; i += 2 * h) {
-            int last = i + 2 * h - 1;
+    for (int half = 1; half <= size; half *= 2)
+        for (int i = 0; i <= size - half; i += 2 * half) {
+            int last = i + 2 * half - 1;
             if (last >= size)
                 last = size - 1;
-            comp_swap_amount += merge(arr, i, i + h, last);
+            comp_swap_amount += merge(arr, i, i + half, last);
         }
 
     return comp_swap_amount;
