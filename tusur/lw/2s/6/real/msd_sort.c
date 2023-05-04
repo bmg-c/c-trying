@@ -1,10 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <time.h>
 
 #define START_CHAR 48
 #define R 10
+#define ARR_SIZE_STEP 5
+#define MAX_ARR_SIZE 100
+#define STR_SYMBOL_STEP 1
+#define MAX_SYMBOL_AMOUNT 9
+#define TESTS_AMOUNT 1000
 
 void print_arr_str_arr(char ***arr, int arr_size) {
     for (int j = 0; j < R; j++) {
@@ -46,7 +50,7 @@ void _sort(char **arr, int start, int end, int digit) {
     if (arr[0][digit] == '\0' || start >= end)
         return;
 
-    int *count_arr = (int *)malloc(sizeof(int) * R);
+    int *count_arr = (int *)malloc(sizeof(int) * (R + 1));
     for (int i = 0; i < R; i++)
         count_arr[i] = 0;
 
@@ -67,81 +71,83 @@ void _sort(char **arr, int start, int end, int digit) {
                 }
     }
 
-    // print_arr(count_arr, R);
-    // print_str_arr(arr, 10);
-    free(count_arr);
     free(temp_arr);
 
-    // for (int i = start + 1; i <= end; i++) {
-    //     int j;
-    //     char *elem = arr[i];
-    //
-    //     for (j = i - 1; j >= start && get_digit(arr[j], digit) > get_digit(elem, digit);
-    //          j--)
-    //         arr[j + 1] = arr[j];
-    //     arr[j + 1] = elem;
-    // }
-
-    int *split_points = (int *)malloc(sizeof(int) * (R + 1));
-    for (int i = 0; i < R; i++)
-        split_points[i] = 0;
-    split_points[R] = end + 1;
-
-    int num = 0;
-    int i = start;
-    while (i <= end && num < R) {
-        split_points[num] = i;
-
-        while (get_digit(arr[i], digit) == num && i < end && num < R)
-            i++;
-
-        num++;
-    }
-    // print_arr(split_points, R + 1);
+    for (int i = 1; i < R; i++)
+        count_arr[i] += count_arr[i - 1];
+    for (int i = R; i >= 0; i--)
+        count_arr[i] = count_arr[i - 1];
+    count_arr[0] = 0;
+    count_arr[R] = end - start + 1;
 
     for (int i = 0; i < R; i++)
-        _sort(arr, split_points[i], split_points[i + 1] - 1, digit + 1);
+        _sort(arr, start + count_arr[i], start + count_arr[i + 1] - 1,
+              digit + 1);
 
-    free(split_points);
+    free(count_arr);
 }
 
 void sort(char **arr, int arr_size) { _sort(arr, 0, arr_size - 1, 0); }
 
 int run() {
-    // int arr_size = 0, str_size = 0;
-    // printf(
-    //     "Введите количество строк и символов в строке (arr_size str_size): ");
-    // scanf("%d %d", &arr_size, &str_size);
-    // printf("\n");
-    //
-    // char **arr = create_rand_arr(arr_size, str_size);
-    // print_str_arr(arr, arr_size);
-    // printf("\n");
-    //
-    // sort(arr, arr_size);
-    // printf("\n");
-    // print_str_arr(arr, arr_size);
-    for (int arr_size = 10, str_size = 3, test = 1; test <= 100; test++) {
-        char **arr = create_rand_arr(arr_size, str_size);
-        print_str_arr(arr, arr_size);
-        sort(arr, arr_size);
+    int arr_size = 0, str_size = 0;
+    printf(
+        "Введите количество строк и символов в строке (arr_size str_size): ");
+    scanf("%d %d", &arr_size, &str_size);
+    printf("\n");
 
-        print_str_arr(arr, arr_size);
-        for (int i = 1; i < arr_size; i++) {
-            printf("%d\n", atoi(arr[i]));
-            if (atoi(arr[i - 1]) > atoi(arr[i]))
-                printf("Ошиб очка\n");
+    char **arr = create_rand_arr(arr_size, str_size);
+    print_str_arr(arr, arr_size);
+    printf("\n");
+
+    sort(arr, arr_size);
+    printf("\n");
+    print_str_arr(arr, arr_size);
+    int is_wrong = 0;
+    for (int i = 1; i < arr_size; i++)
+        if (atoi(arr[i - 1]) > atoi(arr[i])) {
+            printf("%d > %d. Ошибочка\n", atoi(arr[i - 1]), atoi(arr[i]));
+            is_wrong = 1;
+        } else {
+            printf("%d <= %d\n", atoi(arr[i - 1]), atoi(arr[i]));
         }
-        printf("\n");
+    for (int i = 0; i < arr_size; i++)
+        free(arr[i]);
+    free(arr);
 
-        for (int i = 0; i < arr_size; i++)
-            free(arr[i]);
-        free(arr);
-    }
+    // int is_wrong = 0;
+    // for (int arr_size = ARR_SIZE_STEP; arr_size <= MAX_ARR_SIZE;
+    //      arr_size += ARR_SIZE_STEP) {
+    //     for (int str_size = STR_SYMBOL_STEP; str_size <= MAX_SYMBOL_AMOUNT;
+    //          str_size += STR_SYMBOL_STEP)
+    //         for (int test = 1; test <= TESTS_AMOUNT; test++) {
+    //             char **arr = create_rand_arr(arr_size, str_size);
+    //             print_str_arr(arr, arr_size);
+    //             sort(arr, arr_size);
+    //
+    //             print_str_arr(arr, arr_size);
+    //             for (int i = 1; i < arr_size; i++) {
+    //                 if (atoi(arr[i - 1]) > atoi(arr[i])) {
+    //                     // printf("%d > %d. Ошибочка\n", atoi(arr[i - 1]),
+    //                     //        atoi(arr[i]));
+    //                     is_wrong = 1;
+    //                 } else {
+    //                     // printf("%d <= %d\n", atoi(arr[i - 1]), atoi(arr[i]));
+    //                 }
+    //             }
+    //             printf("\n");
+    //
+    //             for (int i = 0; i < arr_size; i++)
+    //                 free(arr[i]);
+    //             free(arr);
+    //         }
+    // }
 
-    // for (int i = 0; i < arr_size; i++)
-    //     free(arr[i]);
-    // free(arr);
+    // if (is_wrong == 1)
+    //     printf("Во время тестирования произошла ошибка\n");
+    // else
+    //     printf("При тестировании не было найдено ошибок\n");
+
     return EXIT_SUCCESS;
 }
 
